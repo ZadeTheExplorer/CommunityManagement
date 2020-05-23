@@ -7,7 +7,7 @@ public class Movie {
     private String title;
     private String starring;
     private String director;
-    private Genres[] genre;
+    private Genres genre;
     private String duration;
     private Classification classification;
     private String releaseDate;
@@ -28,8 +28,8 @@ public class Movie {
         return duration;
     }
 
-    public void setGenre(Genres[] genre) {this.genre = genre;}
-    public Genres[] getGenre() {
+    public void setGenre(Genres genre) {this.genre = genre;}
+    public Genres getGenre() {
         return genre;
     }
 
@@ -49,7 +49,7 @@ public class Movie {
     }
 
     // constructor
-    public Movie(String title, String starring, String director, String duration, Genres[] genre, Classification classification, String releaseDate, int totalDVDs){
+    public Movie(String title, String starring, String director, String duration, Genres genre, Classification classification, String releaseDate, int totalDVDs){
         this.title = title;
         this.starring = starring;
         this.director = director;
@@ -66,7 +66,7 @@ public class Movie {
                 "title='" + title + '\'' +
                 ", starring=" + starring + '\'' +
                 ", director='" + director + '\'' +
-                ", genre=" + Arrays.toString(genre) +
+                ", genre=" + genre + '\'' +
                 ", duration='" + duration + '\'' +
                 ", classification=" + classification +
                 ", releaseDate='" + releaseDate + '\'' +

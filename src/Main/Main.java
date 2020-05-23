@@ -2,342 +2,20 @@ package Main;
 
 import Movie.*;
 
-import java.io.IOException;
-import java.util.Scanner;
+import java.util.Arrays;
 
 /**
  * The type Main.
  */
 public class Main {
 
-    /**
-     * The Collection.
-     */
-    static MovieCollection collection = MovieCollection.initCollection();
-
-    /**
-     * All genres to string string.
-     *
-     * @return the string
-     */
-    public static String allGenresToString() {
-        Genres[] genres = Genres.values();
-        StringBuilder genresString = new StringBuilder();
-        for (int i=0; i<genres.length; i++){
-            genresString.append(String.valueOf(i + 1)).append(". ").append(genres[i].getString()).append("\n");
-        }
-        return genresString.toString();
-    }
-
-    /**
-     * Get genres input genres [ ].
-     *
-     * @param listOfGenres the list of genres
-     * @return the genres [ ]
-     */
-    public static Genres[] getGenresInput(String listOfGenres){
-        String [] listVector = listOfGenres.split(" ");
-        Genres[] genres = new Genres[listVector.length];
-        for (int i=0; i < listVector.length; i++){
-            if (listVector[i].compareTo("1") == 0){
-                genres[i] = Genres.DRAMA;
-            }
-            else if (listVector[i].compareTo("2") == 0){
-                genres[i] = Genres.ADVENTURE;
-            }
-            else if (listVector[i].compareTo("3") == 0){
-                genres[i] = Genres.FAMILY;
-            }
-            else if (listVector[i].compareTo("4") == 0){
-                genres[i] = Genres.ACTION;
-            }
-            else if (listVector[i].compareTo("5") == 0){
-                genres[i] = Genres.SCI_FI;
-            }
-            else if (listVector[i].compareTo("6") == 0){
-                genres[i] = Genres.COMEDY;
-            }
-            else if (listVector[i].compareTo("7") == 0){
-                genres[i] = Genres.ANIMATED;
-            }
-            else if (listVector[i].compareTo("8") == 0){
-                genres[i] = Genres.THRILLER;
-            }
-            else if (listVector[i].compareTo("9") == 0){
-                genres[i] = Genres.OTHER;
-            }
-            else {
-                genres = null;
-                break;
-            }
-        }
-        if (genres == null) {
-            System.out.println("Wrong input, please input again!");
-        }
-        return genres;
-    }
-    /**
-     * All classification string.
-     *
-     * @return the string
-     */
-    public static String allClassification() {
-        Classification[] classifications = Classification.values();
-        StringBuilder classificationsString = new StringBuilder();
-        for (int i=0; i<classifications.length; i++){
-            classificationsString.append(String.valueOf(i + 1)).append(". ").append(classifications[i].getString()).append("\n");
-        }
-        return classificationsString.toString();
-    }
-
-    /**
-     * Gets classification input.
-     *
-     * @param input the input
-     * @return the classification input
-     */
-    public static Classification getClassificationInput(int input) {
-
-        Classification classification = null;
-
-        switch (input){
-            case 1:
-                classification = Classification.G;
-                break;
-            case 2:
-                classification = Classification.PG;
-                break;
-            case 3:
-                classification = Classification.M;
-                break;
-            case 4:
-                classification = Classification.MA;
-                break;
-            default:
-                break;
-        }
-        if (classification == null){
-            System.out.println("Wrong input, please input again!");
-        }
-        return classification;
-    }
-
-    /**
-     * Clear screen.
-     */
-    public static void clearScreen() {
-        System.out.println(System.lineSeparator().repeat(50));
-    }
-    public static void waitForUserRespone(){
-
-    }
-
-    /**
-     * Main menu.
-     */
-    public static void mainMenu(Scanner scanner) {
-        String welcomeMenu = "Welcome to the Community Library\n" +
-                "============Main Menu===========\n" +
-                " 1. Staff Login\n" +
-                " 2. Member Login\n" +
-                " 0. Exit\n" +
-                "================================\n\n" +
-                "Please make a selection (1-2 or 0 to exit): ";
-
-        clearScreen();
-
-        System.out.print(welcomeMenu);
-        while(scanner.hasNext()){
-            while(scanner.hasNextInt()){
-                int input = scanner.nextInt();
-                if(input == 1) {
-                    staffMenu(scanner);
-                }
-                else if(input == 2) {
-                    memberMenu(scanner);
-                }
-                else if(input == 0) {
-                    scanner.close();
-                    System.exit(0);
-                    break;
-                }
-                else if(input == 3) {
-                    System.out.print("Test case. ");
-                    System.out.println("Press any key to out");
-                    if(scanner.hasNext()){
-                        scanner.close();
-                        System.exit(0);
-                    }
-                }
-                else{
-                    System.out.println("Wrong input, try again...");
-                }
-            }
-            scanner.nextLine();
-            System.out.print("Wrong input, please try to enter a selection above: ");
-
-        }
-        scanner.close();
-    }
-    /**
-     * Staff menu.
-     */
-    public static void staffMenu(Scanner scanner) {
-        String staffMenu = "================Staff Menu================\n" +
-                "1. Add a new movie DVD\n" +
-                "2. Remove a movie DVD\n" +
-                "3. Register a new Member\n" +
-                "4. Find a registered member's phone number\n" +
-                "0. Return to main menu\n" +
-                "==========================================\n\n" +
-                "Please make a selection (1-5 or 0 to exit): ";
-
-
-        clearScreen();
-        System.out.print(staffMenu);
-
-        while(scanner.hasNext()){
-            if(scanner.hasNextInt()){
-                int input = scanner.nextInt();
-                // Add Movie DVD
-                if(input == 1){
-                    scanner.nextLine();
-                    System.out.print("Enter the movie title of the DVD added: ");
-                    String title = scanner.nextLine();
-
-                    System.out.print("Enter the list of starring, separated by comma: ");
-                    String starring = scanner.nextLine();
-
-                    System.out.print("Enter the name of director: ");
-                    String director = scanner.nextLine();
-
-                    System.out.print("Enter the durations (minutes): ");
-                    String duration = scanner.nextLine();
-
-                    System.out.println(allGenresToString());
-                    Genres[] genres;
-                    do {
-                        System.out.print("Enter the genres from the list above with number, separate with space: ");
-                        genres = getGenresInput(scanner.nextLine());
-                    } while (genres == null);
-
-                    System.out.println(allClassification());
-                    System.out.print("Enter the classification of the movie DVD as the number in the list above: ");
-                    Classification classification = getClassificationInput(scanner.nextInt());
-
-                    scanner.nextLine();
-                    System.out.print("Enter the released date: ");
-                    String releasedDate = scanner.nextLine();
-
-                    System.out.print("Enter the number of DVDs added: ");
-                    int totalDVDs = scanner.nextInt();
-                    collection.add(new Movie(title, starring, director, duration, genres, classification, releasedDate, totalDVDs));
-
-                    System.out.println("Added Movie: " + title + ", with: " + totalDVDs + " DVDs.");
-                    collection.displayAll();
-                    System.out.println("Press enter to return to staff menu. . .");
-                    scanner.nextLine();
-                    scanner.reset();
-                    System.out.println(staffMenu);
-
-                }
-                // Remove a Movie DVD
-                else if(input == 2) {
-                    scanner.nextLine();
-                    System.out.print("Enter the movie title of the DVDs to remove: ");
-                    String movieTitleRemove = scanner.nextLine();
-                    collection.remove(movieTitleRemove);
-                    System.out.println("Enter any key to return to menu...");
-                    scanner.nextLine();
-                    scanner.reset();
-                    clearScreen();
-                    System.out.print(staffMenu);
-
-                }
-                // Register a new member
-                else if(input == 3) {
-                    scanner.nextLine();
-                    System.out.print("Enter member name: ");
-                    String username = scanner.nextLine().replaceAll("\\s", "");
-                    System.out.print("Enter password: ");
-                    int password = scanner.nextInt();
-                    System.out.println("Created user: " + username + " with password: " + password);
-
-                }
-                // Find a member's phone number
-                else if(input == 4) {
-                    scanner.nextLine();
-                    System.out.print("Enter member name: ");
-                    String name = scanner.nextLine();
-                    System.out.println("User: " + name + "number.........02139213");
-
-                }
-                // test case
-                else if(input == 5) {
-                    System.out.println("testing menu redirect");
-                    scanner.reset();
-                    staffMenu(scanner);
-                }
-                // Return to main menu
-                else if(input == 0) {
-                    mainMenu(scanner);
-                    break;
-                }
-                else {
-                    System.out.println("Wrong input, try again...");
-                }
-            }
-            else if (scanner.hasNextLine()) {
-                System.out.print("Wrong input, please try to enter a selection above: ");
-//                scanner.nextLine();
-            }
-        }
-
-        scanner.close();
-    }
-
-    /**
-     * Member menu.
-     */
-    public static void memberMenu(Scanner scanner) {
-        String memberMenu = "==============Member Menu==============\n" +
-                "1. Display all movies\n" +
-                "2. Borrow a movie DVD\n" +
-                "3. Return a movie DVD\n" +
-                "4. List current borrowed movie DVDSs\n" +
-                "5. Display top 10 most popular movies\n" +
-                "0. Return to main Menu\n" +
-                "=======================================\n\n" +
-                "Please make a selection (1-5 or 0 to exit): ";
-
-        switch (scanner.nextInt()) {
-            case 1:
-                collection.displayAll();
-            case 2:
-            case 3:
-            case 4:
-            case 5:
-            case 0:
-                mainMenu(scanner);
-                break;
-            default:
-                break;
-        }
-    }
-
-
-    /**
-     * The entry point of application.
-     *
-     * @param args the input arguments
-     */
     public static void main(String[] args){
         Movie movie1 = new Movie(
                 "Titanic",
                 "Leonardo DiCaprio, Kate Winslet, Billy Zane, Kathy Bates, Frances Fisher, Bernard Hill",
                 "Jame Cameron",
                 "195minutes",
-                new Genres[] {Genres.DRAMA, Genres.OTHER},
+                Genres.DRAMA,
                 Classification.G,
                 "1997",
                 10
@@ -348,7 +26,7 @@ public class Main {
                 "Judy Garland, Ray Bolger, Jack Haley, Bert Lahr, Margaret Hamilton, Billie Burke",
                 "King Vidor",
                 "101 minutes",
-                new Genres[] {Genres.FAMILY, Genres.SCI_FI, Genres.OTHER},
+                Genres.FAMILY,
                 Classification.G,
                 "Aug 25, 1939 (Wide)",
                 10
@@ -359,18 +37,37 @@ public class Main {
                 "Lupita Nyong'o, Winston Duke, Elisabeth Moss, Tim Heidecker, Shahadi Wright-Joseph, Evan Alex",
                 "Jordan Peele",
                 "120 minutes",
-                new Genres[] { Genres.THRILLER, Genres.SCI_FI, Genres.OTHER },
+                Genres.THRILLER,
                 Classification.M,
                 "Mar 22, 2019 (Wide)",
                 10
         );
+
+        MovieCollection collection = MovieCollection.getInstance();
         collection.add(movie1);
         collection.add(movie2);
         collection.add(movie3);
-
-        Scanner scanner = new Scanner(System.in);
-
-        mainMenu(scanner);
+        for (int i=0; i<10; i++){
+            String title = "Movie " + String.format("%02d", i+1);
+            Movie movie = new Movie(
+                    title,
+                    "Actor 1, Actress 2",
+                    "Director 1",
+                    "100 minutes",
+                    Genres.THRILLER,
+                    Classification.MA,
+                    "OLD",
+                    10
+            );
+            collection.add(movie);
+        }
+        Menu menu = new Menu(collection);
+        menu.main();
+        System.out.println("The End.");
+        String[] array= collection.getAllMovieTitle();
+        System.out.println(Arrays.toString(array));
+        Arrays.sort(array);
+        System.out.println("Sorted array: " + Arrays.toString(array));
 
     }
 }

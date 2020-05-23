@@ -1,12 +1,12 @@
 package User;
 
 import Movie.Movie;
-
+import Movie.MovieCollection;
 public class Member extends User{
     private String fullname;
     private String contact;
     private String address;
-    private Movie[] borrowedList;
+    private final Movie[] borrowedList;
 
     public void setFullname(String fullname) {
         this.fullname = fullname;
@@ -34,10 +34,6 @@ public class Member extends User{
     }
 
 
-    //TODO: impliment method for borrow a DVD
-    public void borrowNewMovie(Movie movie){
-
-    }
 
     public Member(String fullname, String password, String contact, String address) {
         super(fullname.replaceAll("\\s", ""), password);
@@ -47,4 +43,48 @@ public class Member extends User{
         this.borrowedList = new Movie[10];
     }
 
+    public boolean borrowDVD(String title) {
+        for (int i=0; i<borrowedList.length; i++) {
+            if (borrowedList[i] == null) {
+                MovieCollection.getInstance().modifyBorrowedNum(title,1);
+                borrowedList[i] = MovieCollection.getInstance().search(title);
+                return true;
+            }
+            else {
+                if (borrowedList[i].getTitle().compareTo(title) == 0) {
+                    System.out.println("Already borrowed.");
+                    return false;
+                }
+            }
+
+        }
+        System.out.println("Your borrow list is full. Please return any books before try to borrow new ones.");
+        return false;
+    }
+
+    public boolean returnDVD(String title) {
+        for (int i=0; i<borrowedList.length; i++) {
+            if (borrowedList[i] != null && borrowedList[i].getTitle().compareTo(title) == 0) {
+                MovieCollection.getInstance().modifyBorrowedNum(title,1);
+                borrowedList[i] = null;
+                System.out.println("Return successful!");
+                return true;
+
+            }
+
+
+        }
+        System.out.println("Your borrow list is full. Please return any books before try to borrow new ones.");
+        return false;
+    }
+
+    public String displayBorrowList() {
+        StringBuilder string = new StringBuilder();
+        for( Movie movie : borrowedList){
+            if(movie != null){
+                string.append(movie.getTitle()).append(", ");
+            }
+        }
+        return string.toString();
+    }
 }

@@ -30,19 +30,18 @@ public class MovieNode {
     public void setBorrowedNum(int borrowedNum) {
         this.borrowedNum = borrowedNum;
     }
-
+    public void modifyBorrowedNum(int amount) {
+        borrowedNum += amount;
+    }
     public MovieNode getLeftNode(){
         return leftNode;
     }
-
     public void setLeftNode(MovieNode node){
         this.leftNode = node;
     }
-
     public MovieNode getRightNode(){
         return rightNode;
     }
-
     public void setRightNode(MovieNode node){
         this.rightNode = node;
     }

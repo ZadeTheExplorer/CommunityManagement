@@ -2,10 +2,10 @@ package Movie;
 
 public class BinarySearchTree {
 
-    public static MovieNode root;
+    private static MovieNode root;
     String[] node = new String[20];
     public BinarySearchTree() {
-        this.root = null;
+        root = null;
     }
 
     public void addNode(String title, Movie newMovie){
@@ -43,15 +43,15 @@ public class BinarySearchTree {
 
     }
 
-    public Movie search(String title){
+    public MovieNode search(String title){
 
         MovieNode currentNode = root;
 
         while(currentNode != null){
 
-            if(currentNode.getMovie().getTitle().compareTo(title) == 0) return currentNode.getMovie();
+            if(currentNode.getMovie().getTitle().toLowerCase().compareTo(title.toLowerCase()) == 0) return currentNode;
 
-            if(currentNode.getMovie().getTitle().compareTo(title) > 0){
+            if(currentNode.getMovie().getTitle().toLowerCase().compareTo(title.toLowerCase()) > 0){
                 currentNode = currentNode.getLeftNode();
             } else {
                 currentNode = currentNode.getRightNode();
@@ -89,11 +89,11 @@ public class BinarySearchTree {
 
         boolean isLeft = true;
 
-        while(currentNode.getMovie().getTitle().compareTo(title) != 0){
+        while(currentNode.getMovie().getTitle().toLowerCase().compareTo(title.toLowerCase()) != 0){
 
             parent = currentNode;
 
-            if(currentNode.getMovie().getTitle().compareTo(title) > 0){
+            if(currentNode.getMovie().getTitle().toLowerCase().compareTo(title.toLowerCase()) > 0){
                 currentNode = currentNode.getLeftNode();
                 isLeft = true;
             }
@@ -107,10 +107,11 @@ public class BinarySearchTree {
             }
         }
 
-        if(currentNode.getLeftNode() == null && currentNode.getLeftNode() == null){
+        if(currentNode.getLeftNode() == null && currentNode.getRightNode() == null){
             if(currentNode == root){
                 root = null;
-            }else if(isLeft){
+            }
+            if(isLeft){
                 parent.setLeftNode(null);
             }else{
                 parent.setRightNode(null);
@@ -146,13 +147,16 @@ public class BinarySearchTree {
         return true;
     }
 
-    public void addToStringARR(String string) {
+    private void addToStringARR(String string) {
         int i=0;
 
         while (i<node.length){
             if (node[i] == null){
                 node[i] = string;
                 return;
+            }
+            else if (node[i].compareTo(string) == 0) {
+                break;
             }
             i++;
         }
@@ -170,6 +174,8 @@ public class BinarySearchTree {
         return node;
     }
 
-
+    public static MovieNode getRoot() {
+        return root;
+    }
 }
 

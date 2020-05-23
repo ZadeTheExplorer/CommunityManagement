@@ -13,7 +13,7 @@ public class TestBTS {
                 "Leonardo DiCaprio, Kate Winslet, Billy Zane, Kathy Bates, Frances Fisher, Bernard Hill",
                 "Jame Cameron",
                 "195minutes",
-                new Genres[] {Genres.DRAMA, Genres.OTHER},
+                Genres.DRAMA,
                 Classification.G,
                 "1997",
                 10
@@ -24,7 +24,7 @@ public class TestBTS {
                 "Judy Garland, Ray Bolger, Jack Haley, Bert Lahr, Margaret Hamilton, Billie Burke",
                 "King Vidor",
                 "101 minutes",
-                new Genres[] {Genres.FAMILY, Genres.SCI_FI, Genres.OTHER},
+                Genres.FAMILY,
                 Classification.G,
                 "Aug 25, 1939 (Wide)",
                 10
@@ -35,14 +35,14 @@ public class TestBTS {
                 "Lupita Nyong'o, Winston Duke, Elisabeth Moss, Tim Heidecker, Shahadi Wright-Joseph, Evan Alex",
                 "Jordan Peele",
                 "120 minutes",
-                new Genres[] { Genres.THRILLER, Genres.SCI_FI, Genres.OTHER },
+                Genres.THRILLER,
                 Classification.M,
                 "Mar 22, 2019 (Wide)",
                 10
         );
 
         //TODO: ADD 15 movie to the collection
-        // 4: Incredibles 2
+        // 4: Incredible 2
         // 5: Money Heist
         // 6: IT chapter 2
         // 7: The Dark Knight 2008
@@ -59,7 +59,7 @@ public class TestBTS {
         tree.addNode(movie1.getTitle(), movie1);
         tree.addNode(movie2.getTitle(), movie2);
         tree.addNode(movie3.getTitle(), movie3);
-        tree.innerTraverse(tree.root);
+        tree.innerTraverse(BinarySearchTree.getRoot());
         System.out.println(tree.deleteNode("Us"));
         System.out.println(tree.search("Us"));
         System.out.println(tree.deleteNode("Us"));

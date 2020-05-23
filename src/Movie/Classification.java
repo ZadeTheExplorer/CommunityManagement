@@ -6,7 +6,7 @@ public enum Classification {
     M("Mature (M15+)"),
     MA("Mature Accompanied (MA15+)");
 
-    private String string;
+    private final String string;
 
     public String getString() {
         return string;

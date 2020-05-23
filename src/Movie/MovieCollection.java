@@ -2,13 +2,15 @@ package Movie;
 
 import User.MemberCollection;
 
+import java.util.Arrays;
+
 public class MovieCollection {
     private static MovieCollection movieCollection;
     private static BinarySearchTree MovieBTS;
 
     private MovieCollection() {}
 
-    public static MovieCollection initCollection(){
+    public static MovieCollection getInstance(){
         if(movieCollection == null) {
             movieCollection = new MovieCollection();
             MovieBTS = new BinarySearchTree();
@@ -20,7 +22,7 @@ public class MovieCollection {
 
     public void add(Movie movie) {
         MovieBTS.addNode(movie.getTitle(), movie);
-        System.out.println("Movie Added!1");
+        System.out.println("Movie Added!");
     }
 
     public void remove(String movieTitle) {
@@ -32,24 +34,29 @@ public class MovieCollection {
     }
 
     public Movie search(String movieTitle) {
-        Movie movie = MovieBTS.search(movieTitle);
+        Movie movie = MovieBTS.search(movieTitle).getMovie();
         if (movie == null) {
             System.out.println("Cannot found movie: " + movieTitle);
         }
         return movie;
     }
 
+    public String[] getAllMovieTitle() {
+        return MovieBTS.getAllNode();
+    }
+
     public void displayAll() {
         StringBuilder all = new StringBuilder();
         String [] AllMovieArr = MovieBTS.getAllNode();
-
         for (int i=0; i < AllMovieArr.length; i++){
             if(AllMovieArr[i] != null){
-                all.append(String.valueOf(i + 1)).append(". ").append(AllMovieArr[i]).append("\n");
+                all.append(String.format("%02d",i + 1)).append(". ").append(AllMovieArr[i]).append("\n");
             }
         }
         System.out.println(all);
-
     }
 
+    public void modifyBorrowedNum(String title, int amountOfDVDs) {
+        MovieBTS.search(title).modifyBorrowedNum(amountOfDVDs);
+    }
 }
