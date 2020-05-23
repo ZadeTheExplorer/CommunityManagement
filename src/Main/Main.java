@@ -1,6 +1,10 @@
 package Main;
 
 import Movie.*;
+import com.sun.tools.jconsole.JConsoleContext;
+
+import java.io.Console;
+import java.io.IOException;
 import java.util.Scanner;
 
 /**
@@ -123,9 +127,7 @@ public class Main {
     /**
      * Main menu.
      */
-    public static void mainMenu() {
-        Scanner input = new Scanner(System.in);
-
+    public static void mainMenu(Scanner scanner) {
         String welcomeMenu = "Welcome to the Community Library\n" +
                 "============Main Menu===========\n" +
                 " 1. Staff Login\n" +
@@ -137,29 +139,42 @@ public class Main {
         clearScreen();
 
         System.out.print(welcomeMenu);
+        while(scanner.hasNext()){
+            while(scanner.hasNextInt()){
+                int input = scanner.nextInt();
+                if(input == 1) {
+                    staffMenu(scanner);
+                }
+                else if(input == 2) {
+                    memberMenu(scanner);
+                }
+                else if(input == 0) {
+                    scanner.close();
+                    System.exit(0);
+                    break;
+                }
+                else if(input == 3) {
+                    System.out.print("Test case. ");
+                    System.out.println("Press any key to out");
+                    if(scanner.hasNext()){
+                        scanner.close();
+                        System.exit(0);
+                    }
+                }
+                else{
+                    System.out.println("Wrong input, try again...");
+                }
+            }
+            scanner.nextLine();
+            System.out.print("Wrong input, please try to enter a selection above: ");
 
-        switch(input.nextInt()) {
-            case 1:
-                staffMenu();
-                break;
-            case 2:
-                memberMenu();
-                break;
-            case 0:
-                input.close();
-                System.exit(0);
-                break;
-            default:
-                System.out.print("Wrong input, please try again");
-                input.nextInt();
         }
-        input.close();
+        scanner.close();
     }
-
     /**
      * Staff menu.
      */
-    public static void staffMenu() {
+    public static void staffMenu(Scanner scanner) {
         String staffMenu = "================Staff Menu================\n" +
                 "1. Add a new movie DVD\n" +
                 "2. Remove a movie DVD\n" +
@@ -169,14 +184,13 @@ public class Main {
                 "==========================================\n\n" +
                 "Please make a selection (1-5 or 0 to exit): ";
 
-        Scanner scanner = new Scanner(System.in);
 
         clearScreen();
         System.out.print(staffMenu);
 
         while(scanner.hasNext()){
-            if(scanner.nextInt() == 1){
-
+            int input = scanner.nextInt();
+            if(input == 1){
                 scanner.nextLine();
                 System.out.print("Enter the movie title of the DVD added: ");
                 String title = scanner.nextLine();
@@ -197,6 +211,7 @@ public class Main {
                 System.out.println(allClassification());
                 System.out.print("Enter the classification of the movie DVD as the number in the list above: ");
                 Classification classification = getClassificationInput(scanner.nextInt());
+
                 scanner.nextLine();
                 System.out.print("Enter the released date: ");
                 String releasedDate = scanner.nextLine();
@@ -207,40 +222,45 @@ public class Main {
 
                 System.out.println("Added Movie: " + title + ", with: " + totalDVDs + " DVDs.");
                 collection.displayAll();
-                System.out.println("Press any key to return back to menu. . .");
-                scanner.next();
-                scanner.close();
-                staffMenu();
-                break;
-            }
-            if(scanner.nextInt() == 2) {
+                System.out.println("Press enter to return to staff menu. . .");
                 scanner.nextLine();
+                scanner.reset();
+                System.out.println(staffMenu);
+
+            }
+            if(input == 2) {
+//                scanner.nextLine();
                 System.out.print("Enter the movie title of the DVDs to remove: ");
                 String movieTitleRemove = scanner.nextLine();
                 System.out.print("Enter the number of DVDs removing: ");
                 int DvdsNumRemove = scanner.nextInt();
                 System.out.println("Removed " + movieTitleRemove + " with num: " + DvdsNumRemove);
-                break;
+
             }
-            if(scanner.nextInt() == 3){
+            if(input == 3){
                 scanner.nextLine();
                 System.out.print("Enter member name: ");
                 String username = scanner.nextLine().replaceAll("\\s", "");
                 System.out.print("Enter password: ");
                 int password = scanner.nextInt();
                 System.out.println("Created user: " + username + " with password: " + password);
-                break;
+
             }
-            if(scanner.nextInt() == 4){
+            if(input == 4){
                 scanner.nextLine();
                 System.out.print("Enter member name: ");
                 String name = scanner.nextLine();
                 System.out.println("User: " + name + "number.........02139213");
-                break;
+
             }
-            if(scanner.nextInt() == 0){
-                mainMenu();
-            break;
+            if (input == 5) {
+                System.out.println("testing menu redirect");
+                scanner.reset();
+                staffMenu(scanner);
+            }
+            if(input == 0){
+                mainMenu(scanner);
+                break;
             }
         }
 
@@ -250,7 +270,7 @@ public class Main {
     /**
      * Member menu.
      */
-    public static void memberMenu() {
+    public static void memberMenu(Scanner scanner) {
         String memberMenu = "==============Member Menu==============\n" +
                 "1. Display all movies\n" +
                 "2. Borrow a movie DVD\n" +
@@ -261,10 +281,6 @@ public class Main {
                 "=======================================\n\n" +
                 "Please make a selection (1-5 or 0 to exit): ";
 
-        Scanner scanner = new Scanner(System.in);
-
-        System.out.print(memberMenu);
-
         switch (scanner.nextInt()) {
             case 1:
                 collection.displayAll();
@@ -273,7 +289,7 @@ public class Main {
             case 4:
             case 5:
             case 0:
-                mainMenu();
+                mainMenu(scanner);
                 break;
             default:
                 break;
@@ -286,7 +302,7 @@ public class Main {
      *
      * @param args the input arguments
      */
-    public static void main(String[] args) {
+    public static void main(String[] args){
         Movie movie1 = new Movie(
                 "Titanic",
                 "Leonardo DiCaprio, Kate Winslet, Billy Zane, Kathy Bates, Frances Fisher, Bernard Hill",
@@ -322,7 +338,10 @@ public class Main {
         collection.add(movie1);
         collection.add(movie2);
         collection.add(movie3);
-        mainMenu();
+
+        Scanner scanner = new Scanner(System.in);
+
+        mainMenu(scanner);
 
     }
 }
