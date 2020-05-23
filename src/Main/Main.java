@@ -15,11 +15,11 @@ public class Main {
 
     public static String allGenresToString() {
         Genres[] genres = Genres.values();
-        String genresString = "";
+        StringBuilder genresString = new StringBuilder();
         for (int i=0; i<genres.length; i++){
-            genresString += String.valueOf(i+1) +". " + genres[i].getString() + "\n";
+            genresString.append(String.valueOf(i + 1)).append(". ").append(genres[i].getString()).append("\n");
         }
-        return genresString;
+        return genresString.toString();
     }
     public static Genres[] getGenresInput(String listOfGenres) {
         String [] listVector = listOfGenres.split(" ");
@@ -57,11 +57,11 @@ public class Main {
     }
     public static String allClassification() {
         Classification[] classifications = Classification.values();
-        String classificationsString = "";
+        StringBuilder classificationsString = new StringBuilder();
         for (int i=0; i<classifications.length; i++){
-            classificationsString += String.valueOf(i+1) +". " + classifications[i].getString() + "\n";
+            classificationsString.append(String.valueOf(i + 1)).append(". ").append(classifications[i].getString()).append("\n");
         }
-        return classificationsString;
+        return classificationsString.toString();
     }
     public static Classification getClassificationInput(int input) {
 
