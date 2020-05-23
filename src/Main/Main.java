@@ -1,9 +1,7 @@
 package Main;
 
 import Movie.*;
-import com.sun.tools.jconsole.JConsoleContext;
 
-import java.io.Console;
 import java.io.IOException;
 import java.util.Scanner;
 
@@ -37,41 +35,47 @@ public class Main {
      * @param listOfGenres the list of genres
      * @return the genres [ ]
      */
-    public static Genres[] getGenresInput(String listOfGenres) {
+    public static Genres[] getGenresInput(String listOfGenres){
         String [] listVector = listOfGenres.split(" ");
         Genres[] genres = new Genres[listVector.length];
         for (int i=0; i < listVector.length; i++){
             if (listVector[i].compareTo("1") == 0){
                 genres[i] = Genres.DRAMA;
             }
-            if (listVector[i].compareTo("2") == 0){
+            else if (listVector[i].compareTo("2") == 0){
                 genres[i] = Genres.ADVENTURE;
             }
-            if (listVector[i].compareTo("3") == 0){
+            else if (listVector[i].compareTo("3") == 0){
                 genres[i] = Genres.FAMILY;
             }
-            if (listVector[i].compareTo("4") == 0){
+            else if (listVector[i].compareTo("4") == 0){
                 genres[i] = Genres.ACTION;
             }
-            if (listVector[i].compareTo("5") == 0){
+            else if (listVector[i].compareTo("5") == 0){
                 genres[i] = Genres.SCI_FI;
             }
-            if (listVector[i].compareTo("6") == 0){
+            else if (listVector[i].compareTo("6") == 0){
                 genres[i] = Genres.COMEDY;
             }
-            if (listVector[i].compareTo("7") == 0){
+            else if (listVector[i].compareTo("7") == 0){
                 genres[i] = Genres.ANIMATED;
             }
-            if (listVector[i].compareTo("8") == 0){
+            else if (listVector[i].compareTo("8") == 0){
                 genres[i] = Genres.THRILLER;
             }
-            if (listVector[i].compareTo("9") == 0){
+            else if (listVector[i].compareTo("9") == 0){
                 genres[i] = Genres.OTHER;
             }
+            else {
+                genres = null;
+                break;
+            }
+        }
+        if (genres == null) {
+            System.out.println("Wrong input, please input again!");
         }
         return genres;
     }
-
     /**
      * All classification string.
      *
@@ -112,7 +116,9 @@ public class Main {
             default:
                 break;
         }
-
+        if (classification == null){
+            System.out.println("Wrong input, please input again!");
+        }
         return classification;
     }
 
@@ -122,7 +128,9 @@ public class Main {
     public static void clearScreen() {
         System.out.println(System.lineSeparator().repeat(50));
     }
+    public static void waitForUserRespone(){
 
+    }
 
     /**
      * Main menu.
@@ -189,78 +197,99 @@ public class Main {
         System.out.print(staffMenu);
 
         while(scanner.hasNext()){
-            int input = scanner.nextInt();
-            if(input == 1){
-                scanner.nextLine();
-                System.out.print("Enter the movie title of the DVD added: ");
-                String title = scanner.nextLine();
+            if(scanner.hasNextInt()){
+                int input = scanner.nextInt();
+                // Add Movie DVD
+                if(input == 1){
+                    scanner.nextLine();
+                    System.out.print("Enter the movie title of the DVD added: ");
+                    String title = scanner.nextLine();
 
-                System.out.print("Enter the list of starring, separated by comma: ");
-                String starring = scanner.nextLine();
+                    System.out.print("Enter the list of starring, separated by comma: ");
+                    String starring = scanner.nextLine();
 
-                System.out.print("Enter the name of director: ");
-                String director = scanner.nextLine();
+                    System.out.print("Enter the name of director: ");
+                    String director = scanner.nextLine();
 
-                System.out.print("Enter the durations (minutes): ");
-                String duration = scanner.nextLine();
+                    System.out.print("Enter the durations (minutes): ");
+                    String duration = scanner.nextLine();
 
-                System.out.println(allGenresToString());
-                System.out.print("Enter the genres from the list above with number, separate with space: ");
-                Genres[] genres = getGenresInput(scanner.nextLine());
+                    System.out.println(allGenresToString());
+                    Genres[] genres;
+                    do {
+                        System.out.print("Enter the genres from the list above with number, separate with space: ");
+                        genres = getGenresInput(scanner.nextLine());
+                    } while (genres == null);
 
-                System.out.println(allClassification());
-                System.out.print("Enter the classification of the movie DVD as the number in the list above: ");
-                Classification classification = getClassificationInput(scanner.nextInt());
+                    System.out.println(allClassification());
+                    System.out.print("Enter the classification of the movie DVD as the number in the list above: ");
+                    Classification classification = getClassificationInput(scanner.nextInt());
 
-                scanner.nextLine();
-                System.out.print("Enter the released date: ");
-                String releasedDate = scanner.nextLine();
+                    scanner.nextLine();
+                    System.out.print("Enter the released date: ");
+                    String releasedDate = scanner.nextLine();
 
-                System.out.print("Enter the number of DVDs added: ");
-                int totalDVDs = scanner.nextInt();
-                collection.add(new Movie(title, starring, director, duration, genres, classification, releasedDate, totalDVDs));
+                    System.out.print("Enter the number of DVDs added: ");
+                    int totalDVDs = scanner.nextInt();
+                    collection.add(new Movie(title, starring, director, duration, genres, classification, releasedDate, totalDVDs));
 
-                System.out.println("Added Movie: " + title + ", with: " + totalDVDs + " DVDs.");
-                collection.displayAll();
-                System.out.println("Press enter to return to staff menu. . .");
-                scanner.nextLine();
-                scanner.reset();
-                System.out.println(staffMenu);
+                    System.out.println("Added Movie: " + title + ", with: " + totalDVDs + " DVDs.");
+                    collection.displayAll();
+                    System.out.println("Press enter to return to staff menu. . .");
+                    scanner.nextLine();
+                    scanner.reset();
+                    System.out.println(staffMenu);
 
+                }
+                // Remove a Movie DVD
+                else if(input == 2) {
+                    scanner.nextLine();
+                    System.out.print("Enter the movie title of the DVDs to remove: ");
+                    String movieTitleRemove = scanner.nextLine();
+                    collection.remove(movieTitleRemove);
+                    System.out.println("Enter any key to return to menu...");
+                    scanner.nextLine();
+                    scanner.reset();
+                    clearScreen();
+                    System.out.print(staffMenu);
+
+                }
+                // Register a new member
+                else if(input == 3) {
+                    scanner.nextLine();
+                    System.out.print("Enter member name: ");
+                    String username = scanner.nextLine().replaceAll("\\s", "");
+                    System.out.print("Enter password: ");
+                    int password = scanner.nextInt();
+                    System.out.println("Created user: " + username + " with password: " + password);
+
+                }
+                // Find a member's phone number
+                else if(input == 4) {
+                    scanner.nextLine();
+                    System.out.print("Enter member name: ");
+                    String name = scanner.nextLine();
+                    System.out.println("User: " + name + "number.........02139213");
+
+                }
+                // test case
+                else if(input == 5) {
+                    System.out.println("testing menu redirect");
+                    scanner.reset();
+                    staffMenu(scanner);
+                }
+                // Return to main menu
+                else if(input == 0) {
+                    mainMenu(scanner);
+                    break;
+                }
+                else {
+                    System.out.println("Wrong input, try again...");
+                }
             }
-            if(input == 2) {
+            else if (scanner.hasNextLine()) {
+                System.out.print("Wrong input, please try to enter a selection above: ");
 //                scanner.nextLine();
-                System.out.print("Enter the movie title of the DVDs to remove: ");
-                String movieTitleRemove = scanner.nextLine();
-                System.out.print("Enter the number of DVDs removing: ");
-                int DvdsNumRemove = scanner.nextInt();
-                System.out.println("Removed " + movieTitleRemove + " with num: " + DvdsNumRemove);
-
-            }
-            if(input == 3){
-                scanner.nextLine();
-                System.out.print("Enter member name: ");
-                String username = scanner.nextLine().replaceAll("\\s", "");
-                System.out.print("Enter password: ");
-                int password = scanner.nextInt();
-                System.out.println("Created user: " + username + " with password: " + password);
-
-            }
-            if(input == 4){
-                scanner.nextLine();
-                System.out.print("Enter member name: ");
-                String name = scanner.nextLine();
-                System.out.println("User: " + name + "number.........02139213");
-
-            }
-            if (input == 5) {
-                System.out.println("testing menu redirect");
-                scanner.reset();
-                staffMenu(scanner);
-            }
-            if(input == 0){
-                mainMenu(scanner);
-                break;
             }
         }
 
