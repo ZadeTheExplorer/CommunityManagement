@@ -1,18 +1,23 @@
 package Main;
 
 import Movie.*;
-import org.w3c.dom.ls.LSOutput;
-
-import java.io.IOException;
-import java.sql.Array;
-import java.sql.SQLOutput;
-import java.util.Arrays;
 import java.util.Scanner;
 
+/**
+ * The type Main.
+ */
 public class Main {
 
+    /**
+     * The Collection.
+     */
     static MovieCollection collection = MovieCollection.initCollection();
 
+    /**
+     * All genres to string string.
+     *
+     * @return the string
+     */
     public static String allGenresToString() {
         Genres[] genres = Genres.values();
         StringBuilder genresString = new StringBuilder();
@@ -21,6 +26,13 @@ public class Main {
         }
         return genresString.toString();
     }
+
+    /**
+     * Get genres input genres [ ].
+     *
+     * @param listOfGenres the list of genres
+     * @return the genres [ ]
+     */
     public static Genres[] getGenresInput(String listOfGenres) {
         String [] listVector = listOfGenres.split(" ");
         Genres[] genres = new Genres[listVector.length];
@@ -55,6 +67,12 @@ public class Main {
         }
         return genres;
     }
+
+    /**
+     * All classification string.
+     *
+     * @return the string
+     */
     public static String allClassification() {
         Classification[] classifications = Classification.values();
         StringBuilder classificationsString = new StringBuilder();
@@ -63,6 +81,13 @@ public class Main {
         }
         return classificationsString.toString();
     }
+
+    /**
+     * Gets classification input.
+     *
+     * @param input the input
+     * @return the classification input
+     */
     public static Classification getClassificationInput(int input) {
 
         Classification classification = null;
@@ -86,12 +111,18 @@ public class Main {
 
         return classification;
     }
+
+    /**
+     * Clear screen.
+     */
     public static void clearScreen() {
         System.out.println(System.lineSeparator().repeat(50));
     }
 
 
-
+    /**
+     * Main menu.
+     */
     public static void mainMenu() {
         Scanner input = new Scanner(System.in);
 
@@ -125,6 +156,9 @@ public class Main {
         input.close();
     }
 
+    /**
+     * Staff menu.
+     */
     public static void staffMenu() {
         String staffMenu = "================Staff Menu================\n" +
                 "1. Add a new movie DVD\n" +
@@ -173,7 +207,6 @@ public class Main {
 
                 System.out.println("Added Movie: " + title + ", with: " + totalDVDs + " DVDs.");
                 collection.displayAll();
-                collection.toString();
                 System.out.println("Press any key to return back to menu. . .");
                 scanner.next();
                 scanner.close();
@@ -213,6 +246,10 @@ public class Main {
 
         scanner.close();
     }
+
+    /**
+     * Member menu.
+     */
     public static void memberMenu() {
         String memberMenu = "==============Member Menu==============\n" +
                 "1. Display all movies\n" +
@@ -244,7 +281,11 @@ public class Main {
     }
 
 
-
+    /**
+     * The entry point of application.
+     *
+     * @param args the input arguments
+     */
     public static void main(String[] args) {
         Movie movie1 = new Movie(
                 "Titanic",

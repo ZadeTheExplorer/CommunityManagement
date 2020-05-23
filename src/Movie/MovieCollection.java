@@ -40,12 +40,12 @@ public class MovieCollection {
     }
 
     public void displayAll() {
-        String all = "";
+        StringBuilder all = new StringBuilder();
         String [] AllMovieArr = MovieBTS.getAllNode();
 
         for (int i=0; i < AllMovieArr.length; i++){
             if(AllMovieArr[i] != null){
-                all += String.valueOf(i+1) + ". " + AllMovieArr[i] + "\n";
+                all.append(String.valueOf(i + 1)).append(". ").append(AllMovieArr[i]).append("\n");
             }
         }
         System.out.println(all);
