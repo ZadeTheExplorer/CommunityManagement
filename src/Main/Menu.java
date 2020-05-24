@@ -174,48 +174,52 @@ public class Menu {
         while(scanner.hasNext()){
             if(scanner.hasNextInt()){
                 int input = scanner.nextInt();
-                //TODO: Implement case when movie is already in collection
-                // Add Movie DVD
                 if(input == 1){
                     scanner.nextLine();
                     System.out.print("Enter the movie title of the DVD added: ");
                     String title = scanner.nextLine();
 
-                    System.out.print("Enter the list of starring, separated by comma: ");
-                    String starring = scanner.nextLine();
+                    if (collection.search(title).getMovie() != null) {
+                        System.out.print("Enter the list of starring, separated by comma: ");
+                        String starring = scanner.nextLine();
 
-                    System.out.print("Enter the name of director: ");
-                    String director = scanner.nextLine();
+                        System.out.print("Enter the name of director: ");
+                        String director = scanner.nextLine();
 
-                    System.out.print("Enter the durations (minutes): ");
-                    String duration = scanner.nextLine();
-                    // get input of genres as an array of selection
-                    System.out.println(allGenresToString());
-                    Genres genres;
-                    do {
-                        System.out.print("Enter the genres from the list above with number, separate with space: ");
-                        genres = getGenresInput(scanner.nextInt());
-                    } while (genres == null);
-                    // get input of classification as selection
-                    System.out.println(allClassification());
-                    Classification classification;
-                    do {
-                        System.out.print("Enter the classification of the movie DVD as the number in the list above: ");
-                        classification = getClassificationInput(scanner.nextInt());
-                    } while (classification == null);
+                        System.out.print("Enter the durations (minutes): ");
+                        String duration = scanner.nextLine();
+                        // get input of genres as an array of selection
+                        System.out.println(allGenresToString());
+                        Genres genres;
+                        do {
+                            System.out.print("Enter the genres from the list above with number, separate with space: ");
+                            genres = getGenresInput(scanner.nextInt());
+                        } while (genres == null);
+                        // get input of classification as selection
+                        System.out.println(allClassification());
+                        Classification classification;
+                        do {
+                            System.out.print("Enter the classification of the movie DVD as the number in the list above: ");
+                            classification = getClassificationInput(scanner.nextInt());
+                        } while (classification == null);
 
-                    scanner.nextLine();
-                    System.out.print("Enter the released date: ");
-                    String releasedDate = scanner.nextLine();
+                        scanner.nextLine();
+                        System.out.print("Enter the released date: ");
+                        String releasedDate = scanner.nextLine();
 
-                    System.out.print("Enter the number of DVDs added: ");
-                    int totalDVDs = scanner.nextInt();
-                    collection.add(new Movie(title, starring, director, duration, genres, classification, releasedDate, totalDVDs));
+                        System.out.print("Enter the number of DVDs added: ");
+                        int totalDVDs = scanner.nextInt();
+                        collection.add(new Movie(title, starring, director, duration, genres, classification, releasedDate, totalDVDs));
 
-                    System.out.println("Added Movie: " + title + ", with: " + totalDVDs + " DVDs.");
-
+                        System.out.println("Added Movie: " + title + ", with: " + totalDVDs + " DVDs.");
+                    }
+                    else {
+                        System.out.println("Please enter the number of DVD copies you would like to add: ");
+                        collection.search(title);
+                    }
                     System.out.println("Press enter to return to menu...: ");
                     scanner.nextLine();
+
                     scanner.reset();
                     System.out.println();
                     System.out.println(staffMenu);
@@ -318,6 +322,11 @@ public class Menu {
                     scanner.nextLine();
                     System.out.print(memberMenu);
                 }
+                //TODO: delete or borrow a movie is not exits
+                // borrow a movie already borrow
+                // delete user's DVDs borrowed if staff delete it from collection
+
+
                 // Borrow a movie
                 else if (input == 2) {
                     scanner.nextLine();

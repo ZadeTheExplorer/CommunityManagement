@@ -33,8 +33,8 @@ public class MovieCollection {
         }
     }
 
-    public Movie search(String movieTitle) {
-        Movie movie = MovieBTS.search(movieTitle).getMovie();
+    public MovieNode search(String movieTitle) {
+        MovieNode movie = MovieBTS.search(movieTitle);
         if (movie == null) {
             System.out.println("Cannot found movie: " + movieTitle);
         }

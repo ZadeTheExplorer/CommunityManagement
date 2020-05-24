@@ -40,42 +40,44 @@ public class Member extends User{
         this.fullname = fullname;
         this.contact = contact;
         this.address = address;
-        this.borrowedList = new Movie[10];
+        this.borrowedList = new Movie[10] ;
     }
 
-    public boolean borrowDVD(String title) {
-        for (int i=0; i<borrowedList.length; i++) {
-            if (borrowedList[i] == null) {
-                MovieCollection.getInstance().modifyBorrowedNum(title,1);
-                borrowedList[i] = MovieCollection.getInstance().search(title);
-                return true;
-            }
-            else {
-                if (borrowedList[i].getTitle().compareTo(title) == 0) {
-                    System.out.println("Already borrowed.");
-                    return false;
+    public void borrowDVD(String title) {
+        if (MovieCollection.getInstance().search(title) != null){
+            for (int i=0; i<borrowedList.length; i++) {
+                if (borrowedList[i] == null ) {
+                    MovieCollection.getInstance().modifyBorrowedNum(title,1);
+                    borrowedList[i] = MovieCollection.getInstance().search(title).getMovie();
+                    System.out.println("Borrow successful!");
+                    return;
+                }
+                else {
+                    if (borrowedList[i].getTitle().compareTo(title) == 0) {
+                        System.out.println("Already borrowed.");
+                        return;
+                    }
                 }
             }
-
+            System.out.println("Your borrow list is full. Please return any books before try to borrow new ones.");
+            return;
         }
-        System.out.println("Your borrow list is full. Please return any books before try to borrow new ones.");
-        return false;
+        System.out.println("The movie DVD is not exits!");
+
     }
 
-    public boolean returnDVD(String title) {
-        for (int i=0; i<borrowedList.length; i++) {
-            if (borrowedList[i] != null && borrowedList[i].getTitle().compareTo(title) == 0) {
-                MovieCollection.getInstance().modifyBorrowedNum(title,1);
-                borrowedList[i] = null;
-                System.out.println("Return successful!");
-                return true;
-
+    public void returnDVD(String title) {
+        if (MovieCollection.getInstance().search(title) != null){
+            for (int i=0; i<borrowedList.length; i++) {
+                if (borrowedList[i] != null && borrowedList[i].getTitle().compareTo(title) == 0) {
+                    MovieCollection.getInstance().modifyBorrowedNum(title,-1);
+                    borrowedList[i] = null;
+                    System.out.println("Return successful!");
+                    return;
+                }
             }
-
-
+            System.out.println("Cannot found that movie DVD in borrowed list.");
         }
-        System.out.println("Your borrow list is full. Please return any books before try to borrow new ones.");
-        return false;
     }
 
     public String displayBorrowList() {

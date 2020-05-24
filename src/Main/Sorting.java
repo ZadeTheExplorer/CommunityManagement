@@ -18,8 +18,7 @@ public class Sorting {
         String [] R = new String [n2];
 
         /*Copy data to temp arrays*/
-        for (int i=0; i<n1; ++i)
-            L[i] = arr[l + i];
+        if (n1 >= 0) System.arraycopy(arr, l, L, 0, n1);
         for (int j=0; j<n2; ++j)
             R[j] = arr[m + 1+ j];
 
@@ -61,10 +60,9 @@ public class Sorting {
             k++;
         }
     }
-
     // Main function that sorts arr[l..r] using
     // merge()
-    public static String[] mergeSort(String[] arr, int minIndex, int maxIndex)
+    public static void mergeSort(String[] arr, int minIndex, int maxIndex)
     {
         if (minIndex < maxIndex)
         {
@@ -78,14 +76,12 @@ public class Sorting {
             // Merge the sorted halves
             merge(arr, minIndex, m, maxIndex);
         }
-        return arr;
     }
-
-    //TODO: Implement Merge Sort
+    // Implement MERGER SORT for string array
     public static void Sort(String[] array){
         mergeSort(array, 0, array.length -1);
     }
-
+    // Implement COUNTING SORT for integer array
     public static void Sort(int[] array){
         int max = Arrays.stream(array).max().getAsInt();
         int min = Arrays.stream(array).min().getAsInt();

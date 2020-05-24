@@ -1,15 +1,11 @@
 package Main;
 
+import java.util.Arrays;
+
 public class Test {
     public static void main(String[] args) {
-        int[] arr = new int[5];
-        arr[0] = 1;
-        arr[1] = 2;
-        arr[2] = 3;
-        arr[4] = 5;
+        int[] arr = {1, 1, 5, -1, 10, 9, 8, 5, 7, 12, -3, 0};
 
-        for(int i : arr){
-            System.out.println(i);
-        }
+        Sorting.Sort(arr);System.out.println(Arrays.toString(arr));
     }
 }

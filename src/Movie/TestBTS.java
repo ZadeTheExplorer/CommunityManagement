@@ -55,7 +55,6 @@ public class TestBTS {
         // 14: God of Gamblers
         // 15: Inception 2010
 
-        //TODO: Impliment testing BTS here
         tree.addNode(movie1.getTitle(), movie1);
         tree.addNode(movie2.getTitle(), movie2);
         tree.addNode(movie3.getTitle(), movie3);
