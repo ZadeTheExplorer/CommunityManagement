@@ -398,8 +398,6 @@ public class Menu {
                     scanner.nextLine();
                     System.out.print(memberMenu);
                 }
-                //TODO
-                // Display top 10 popular movie DVDs
                 else if (input == 5) {
                     scanner.nextLine();
 
