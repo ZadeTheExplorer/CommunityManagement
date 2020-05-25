@@ -11,12 +11,12 @@ public class BestOfTen {
     private static int[] getMaxAndMin(MovieNode[] arr) {
         int min = arr[0].getBorrowedNum();
         int max = arr[0].getBorrowedNum();
-        for (int i=0; i < arr.length; i++){
-            if(arr[i].getBorrowedNum() > max) {
-                max = arr[i].getBorrowedNum();
+        for (MovieNode movieNode : arr) {
+            if (movieNode.getBorrowedNum() > max) {
+                max = movieNode.getBorrowedNum();
             }
-            if(arr[i].getBorrowedNum() < min) {
-                min = arr[i].getBorrowedNum();
+            if (movieNode.getBorrowedNum() < min) {
+                min = movieNode.getBorrowedNum();
             }
         }
         return new int[] {max, min};
@@ -45,12 +45,7 @@ public class BestOfTen {
             output[i] = output[output.length - i - 1];
             output[output.length - i - 1] = temp;
         }
-
         return output;
-    }
-
-    public static void initalisListMovie() {
-
     }
 
     public static void display() {
