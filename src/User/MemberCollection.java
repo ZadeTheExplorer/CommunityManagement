@@ -26,15 +26,15 @@ public class MemberCollection {
         totalMem++;
     }
 
-    public Member searchMember(String fullname) {
+    public Member searchMember(String username) {
         for (Member member : memberCollection) {
-            if (fullname.toLowerCase().equals(member.getFullName().toLowerCase())) {
+            if (member == null) {
+                return null;
+            }
+            if (username.toLowerCase().compareTo(member.getUsername().toLowerCase()) == 0) {
                 return member;
             }
         }
         return null;
     }
-
-    //TODO:
-    // REturn movie chua muon, delete move chua them
 }

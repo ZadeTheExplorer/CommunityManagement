@@ -1,12 +1,13 @@
 package Movie;
 
-import User.MemberCollection;
+import User.Member;
 
-import java.util.Arrays;
+import javax.swing.*;
 
 public class MovieCollection {
     private static MovieCollection movieCollection;
     private static BinarySearchTree MovieBTS;
+    private MovieNode[] allNode = new MovieNode[50];
 
     private MovieCollection() {}
 
@@ -28,6 +29,7 @@ public class MovieCollection {
     public void remove(String movieTitle) {
         if (MovieBTS.deleteNode(movieTitle)) {
             System.out.format("Remove %s from the movie collection%n", movieTitle);
+
         } else {
             System.out.format("Cannot find %s in the movie collection%n", movieTitle);
         }
@@ -41,22 +43,59 @@ public class MovieCollection {
         return movie;
     }
 
-    public String[] getAllMovieTitle() {
-        return MovieBTS.getAllNode();
+    public void modifyBorrowedNum(String title, int amountOfDVDs) {
+        MovieBTS.search(title).modifyBorrowedNum(amountOfDVDs);
+    }
+
+    public int getAvailableDVDsNum(String title){
+        return MovieBTS.search(title).getMovie().getTotalDVDs() - MovieBTS.search(title).getBorrowedNum();
+    }
+
+    private void addToAllNode(MovieNode movieNode) {
+        int i=0;
+
+        while (i<allNode.length){
+            if (allNode[i] == null){
+                allNode[i] = movieNode;
+                return;
+            }
+            else if (allNode[i].getMovie().getTitle().compareTo(movieNode.getMovie().getTitle()) == 0) {
+                break;
+            }
+            i++;
+        }
+    }
+
+    public void innerTraverse(MovieNode node){
+        if(node != null){
+            innerTraverse(node.getLeftNode());
+            addToAllNode(node);
+            innerTraverse(node.getRightNode());
+        }
+    }
+
+    public MovieNode[] getAllNode() {
+        innerTraverse(BinarySearchTree.getRoot());
+
+        int i;
+        for (i=0; i< allNode.length; i++){
+            if(allNode[i] == null){
+                break;
+            }
+        }
+
+        MovieNode [] output = new MovieNode[i];
+        System.arraycopy(allNode, 0, output, 0, i);
+        return output;
     }
 
     public void displayAll() {
         StringBuilder all = new StringBuilder();
-        String [] AllMovieArr = MovieBTS.getAllNode();
+        //String [] AllMovieArr = MovieBTS.getAllNode();
+        MovieNode[] AllMovieArr = getAllNode();
         for (int i=0; i < AllMovieArr.length; i++){
-            if(AllMovieArr[i] != null){
-                all.append(String.format("%02d",i + 1)).append(". ").append(AllMovieArr[i]).append("\n");
-            }
+                all.append(String.format("%02d",i + 1)).append(". ").append(AllMovieArr[i].getMovie().toString()).append("\n");
         }
         System.out.println(all);
-    }
-
-    public void modifyBorrowedNum(String title, int amountOfDVDs) {
-        MovieBTS.search(title).modifyBorrowedNum(amountOfDVDs);
     }
 }

@@ -3,7 +3,7 @@ package Movie;
 public class BinarySearchTree {
 
     private static MovieNode root;
-    String[] node = new String[20];
+
     public BinarySearchTree() {
         root = null;
     }
@@ -147,31 +147,11 @@ public class BinarySearchTree {
         return true;
     }
 
-    private void addToStringARR(String string) {
-        int i=0;
-
-        while (i<node.length){
-            if (node[i] == null){
-                node[i] = string;
-                return;
-            }
-            else if (node[i].compareTo(string) == 0) {
-                break;
-            }
-            i++;
-        }
-    }
-
     public void innerTraverse(MovieNode node){
         if(node != null){
             innerTraverse(node.getLeftNode());
-            addToStringARR(node.getMovie().toString());
             innerTraverse(node.getRightNode());
         }
-    }
-    public String[] getAllNode() {
-        innerTraverse(root);
-        return node;
     }
 
     public static MovieNode getRoot() {

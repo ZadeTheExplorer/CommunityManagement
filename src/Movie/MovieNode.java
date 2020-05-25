@@ -1,5 +1,7 @@
 package Movie;
 
+import User.Member;
+
 public class MovieNode {
     private String title;
     private Movie movie;
@@ -33,6 +35,8 @@ public class MovieNode {
     public void modifyBorrowedNum(int amount) {
         borrowedNum += amount;
     }
+
+
     public MovieNode getLeftNode(){
         return leftNode;
     }
@@ -46,4 +50,11 @@ public class MovieNode {
         this.rightNode = node;
     }
 
+    @Override
+    public String toString() {
+        return "MovieNode{" +
+                "title='" + title + '\'' +
+                ", borrowedNum=" + borrowedNum +
+                '}';
+    }
 }

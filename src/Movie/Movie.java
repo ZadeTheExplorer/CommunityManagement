@@ -48,6 +48,13 @@ public class Movie {
         return title;
     }
 
+    public void setTotalDVDs(int totalDVDs) {
+        this.totalDVDs = totalDVDs;
+    }
+    public int getTotalDVDs() {
+        return totalDVDs;
+    }
+
     // constructor
     public Movie(String title, String starring, String director, String duration, Genres genre, Classification classification, String releaseDate, int totalDVDs){
         this.title = title;

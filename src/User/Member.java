@@ -29,11 +29,6 @@ public class Member extends User{
         return address;
     }
 
-    public Movie[] getBorrowedList() {
-        return borrowedList;
-    }
-
-
 
     public Member(String fullname, String password, String contact, String address) {
         super(fullname.replaceAll("\\s", ""), password);
@@ -45,25 +40,28 @@ public class Member extends User{
 
     public void borrowDVD(String title) {
         if (MovieCollection.getInstance().search(title) != null){
-            for (int i=0; i<borrowedList.length; i++) {
-                if (borrowedList[i] == null ) {
-                    MovieCollection.getInstance().modifyBorrowedNum(title,1);
-                    borrowedList[i] = MovieCollection.getInstance().search(title).getMovie();
-                    System.out.println("Borrow successful!");
-                    return;
-                }
-                else {
-                    if (borrowedList[i].getTitle().compareTo(title) == 0) {
-                        System.out.println("Already borrowed.");
+            if (MovieCollection.getInstance().getAvailableDVDsNum(title) > 0){
+                for (int i=0; i<borrowedList.length; i++) {
+                    if (borrowedList[i] == null ) {
+                        MovieCollection.getInstance().modifyBorrowedNum(title,1);
+                        borrowedList[i] = MovieCollection.getInstance().search(title).getMovie();
+                        System.out.println("Borrow successful!");
                         return;
                     }
+                    else {
+                        if (borrowedList[i].getTitle().compareTo(title) == 0) {
+                            System.out.println("Already borrowed.");
+                            return;
+                        }
+                    }
                 }
+                System.out.println("Your borrow list is full. Please return any books before try to borrow new ones.");
+                return;
+            } else {
+                System.out.println("This Movie is out of stock, please try again later!");
             }
-            System.out.println("Your borrow list is full. Please return any books before try to borrow new ones.");
-            return;
         }
         System.out.println("The movie DVD is not exits!");
-
     }
 
     public void returnDVD(String title) {

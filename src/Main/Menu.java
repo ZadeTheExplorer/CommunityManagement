@@ -8,7 +8,7 @@ import java.util.Scanner;
 
 public class Menu {
     private final Scanner scanner;
-    private MovieCollection collection;
+    private final MovieCollection collection;
     public Menu(MovieCollection collection) {
         this.scanner = new Scanner(System.in);
         this.collection = collection;
@@ -116,6 +116,35 @@ public class Menu {
         return classification;
     }
 
+    public boolean checkLoginStaff(String username, String password){
+        if (username.compareTo("staff") == 0) {
+            if (password.compareTo("today123") == 0) {
+                return true;
+            } else {
+                System.out.println("Password is incorrect. Please try again!");
+                return false;
+            }
+        }
+        System.out.println("Wrong username, please try again!");
+        return false;
+    }
+    public boolean checkLoginMember(String username, String password){
+        System.out.println("checking");
+        if (MemberCollection.getInstance().searchMember(username) != null){
+            System.out.println(username);
+            if( MemberCollection.getInstance().searchMember(username).getPassword().compareTo(password) == 0){
+                return true;
+            } else {
+                System.out.println("Username or password is incorrect. Please try again!");
+                return false;
+            }
+        } else {
+            System.out.println("Account is not registered!");
+            return false;
+        }
+    }
+
+
     public void main(){
         String welcomeMenu = "\nWelcome to the Community Library\n" +
                 "============Main Menu===========\n" +
@@ -130,25 +159,46 @@ public class Menu {
             if(scanner.hasNextInt()){
                 int input = scanner.nextInt();
                 if(input == 1) {
+                    scanner.nextLine();
+                    System.out.print("Enter username: ");
+                    String username = scanner.nextLine();
+                    System.out.print("Enter password: ");
+                    String password = scanner.nextLine();
+
+                    while(!checkLoginStaff(username, password)) {
+                        System.out.println("Login false, please do it again!");
+
+                        System.out.print("Enter username: ");
+                        username = scanner.nextLine();
+                        System.out.print("Enter password: ");
+                        password = scanner.nextLine();
+                    }
+                    System.out.println("Login successful!");
                     staff();
                 }
                 else if(input == 2) {
-                    Member member = new Member("Taylor Swift", "1234", "0123456789", "America");
+                    scanner.nextLine();
+                    System.out.print("Enter username: ");
+                    String username = scanner.nextLine();
+                    System.out.print("Enter password: ");
+                    String password = scanner.nextLine();
+
+                    while(!checkLoginMember(username, password)) {
+                        System.out.println("Login false, please do it again!");
+
+                        System.out.print("Enter username: ");
+                        username = scanner.nextLine();
+                        System.out.print("Enter password: ");
+                        password = scanner.nextLine();
+                    }
+                    Member member = MemberCollection.getInstance().searchMember(username);
+                    System.out.println("Login successful!");
                     member(member);
                 }
                 else if(input == 0) {
                     scanner.close();
                     System.exit(0);
                     break;
-                }
-                else if(input == 3) {
-                    System.out.print("Test case. ");
-                    break;
-//                    System.out.println("Press any key to out");
-//                    if(scanner.hasNext()){
-//                        scanner.close();
-//                        System.exit(0);
-//                    }
                 }
                 else{
                     System.out.println("Wrong input, try again...");
@@ -160,7 +210,7 @@ public class Menu {
         }
     }
     public void staff() {
-        String staffMenu = "\n================Staff Menu================\n" +
+        String staffMenu = "\n\n================Staff Menu================\n" +
                 "1. Add a new movie DVD\n" +
                 "2. Remove a movie DVD\n" +
                 "3. Register a new Member\n" +
@@ -179,7 +229,7 @@ public class Menu {
                     System.out.print("Enter the movie title of the DVD added: ");
                     String title = scanner.nextLine();
 
-                    if (collection.search(title).getMovie() != null) {
+                    if (collection.search(title).getMovie() == null) {
                         System.out.print("Enter the list of starring, separated by comma: ");
                         String starring = scanner.nextLine();
 
@@ -214,15 +264,13 @@ public class Menu {
                         System.out.println("Added Movie: " + title + ", with: " + totalDVDs + " DVDs.");
                     }
                     else {
-                        System.out.println("Please enter the number of DVD copies you would like to add: ");
-                        collection.search(title);
+                        System.out.print("Please enter the number of DVD copies you would like to add: ");
+                        collection.search(title).getMovie().setTotalDVDs(collection.search(title).getMovie().getTotalDVDs() + scanner.nextInt());
                     }
-                    System.out.println("Press enter to return to menu...: ");
-                    scanner.nextLine();
 
-                    scanner.reset();
-                    System.out.println();
-                    System.out.println(staffMenu);
+                    System.out.print("Press enter to return to menu...: ");
+                    scanner.nextLine();
+                    System.out.print(staffMenu);
 
                 }
                 // Remove a Movie DVD
@@ -264,7 +312,7 @@ public class Menu {
                 else if(input == 4) {
                     scanner.nextLine();
                     System.out.print("Enter member name: ");
-                    String name = scanner.nextLine();
+                    String name = scanner.nextLine().replaceAll("\\s", "");
 
                     String phoneNumber = MemberCollection.getInstance().searchMember(name).getContact();
                     System.out.println("Phone number of member \"" + name + "\" is " + phoneNumber);
@@ -322,12 +370,7 @@ public class Menu {
                     scanner.nextLine();
                     System.out.print(memberMenu);
                 }
-                //TODO: delete or borrow a movie is not exits
-                // borrow a movie already borrow
-                // delete user's DVDs borrowed if staff delete it from collection
 
-
-                // Borrow a movie
                 else if (input == 2) {
                     scanner.nextLine();
                     System.out.print("Enter the title of movie to borrow: ");
@@ -360,6 +403,7 @@ public class Menu {
                 else if (input == 5) {
                     scanner.nextLine();
 
+                    BestOfTen.display();
                     System.out.print("Enter any key to return to menu...: ");
                     scanner.nextLine();
                     System.out.print(memberMenu);
