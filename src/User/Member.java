@@ -55,10 +55,11 @@ public class Member extends User{
                         }
                     }
                 }
-                System.out.println("Your borrow list is full. Please return any books before try to borrow new ones.");
+                System.out.println("Your borrow list is full. Please return any DVDs before try to borrow new ones.");
                 return;
             } else {
                 System.out.println("This Movie is out of stock, please try again later!");
+                return;
             }
         }
         System.out.println("The movie DVD is not exits!");
@@ -75,6 +76,8 @@ public class Member extends User{
                 }
             }
             System.out.println("Cannot found that movie DVD in borrowed list.");
+        } else {
+            System.out.println("Can not found: " + title +" in movie collection.");
         }
     }
 
@@ -82,7 +85,7 @@ public class Member extends User{
         StringBuilder string = new StringBuilder();
         for( Movie movie : borrowedList){
             if(movie != null){
-                string.append(movie.getTitle()).append(", ");
+                string.append(movie.getTitle()).append("\n");
             }
         }
         return string.toString();

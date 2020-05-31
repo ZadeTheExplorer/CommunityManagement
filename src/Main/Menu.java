@@ -115,7 +115,9 @@ public class Menu {
         }
         return classification;
     }
-
+    public boolean isCorrectFormat(String password) {
+        return password.chars().allMatch(Character:: isDigit) && password.length() ==4;
+    }
     public boolean checkLoginStaff(String username, String password){
         if (username.compareTo("staff") == 0) {
             if (password.compareTo("today123") == 0) {
@@ -129,9 +131,8 @@ public class Menu {
         return false;
     }
     public boolean checkLoginMember(String username, String password){
-        System.out.println("checking");
+
         if (MemberCollection.getInstance().searchMember(username) != null){
-            System.out.println(username);
             if( MemberCollection.getInstance().searchMember(username).getPassword().compareTo(password) == 0){
                 return true;
             } else {
@@ -224,12 +225,14 @@ public class Menu {
         while(scanner.hasNext()){
             if(scanner.hasNextInt()){
                 int input = scanner.nextInt();
+                // add new movie
+
                 if(input == 1){
                     scanner.nextLine();
                     System.out.print("Enter the movie title of the DVD added: ");
                     String title = scanner.nextLine();
 
-                    if (collection.search(title).getMovie() == null) {
+                    if (collection.search(title) == null) {
                         System.out.print("Enter the list of starring, separated by comma: ");
                         String starring = scanner.nextLine();
 
@@ -293,6 +296,11 @@ public class Menu {
 
                     System.out.print("Enter password (must be 4 digits): ");
                     String password = scanner.nextLine();
+                    while(!isCorrectFormat(password)){
+                        System.out.println("Wrong input. Password must be 4 integer digits.");
+                        System.out.println("Please choose a different password: ");
+                        password = scanner.nextLine();
+                    }
 
                     System.out.print("Enter member's contact: ");
                     String contact = scanner.nextLine();
@@ -313,19 +321,17 @@ public class Menu {
                     scanner.nextLine();
                     System.out.print("Enter member name: ");
                     String name = scanner.nextLine().replaceAll("\\s", "");
-
-                    String phoneNumber = MemberCollection.getInstance().searchMember(name).getContact();
-                    System.out.println("Phone number of member \"" + name + "\" is " + phoneNumber);
+                    Member member = MemberCollection.getInstance().searchMember(name);
+                    if (member == null){
+                        System.out.println("There is no member " +name+ " in member list.");
+                    }else{
+                        String phoneNumber = member.getContact();
+                        System.out.println("Phone number of member \"" + name + "\" is " + phoneNumber);
+                    }
 
                     System.out.print("Enter any key to return to menu...: ");
                     scanner.nextLine();
                     System.out.print(staffMenu);
-                }
-                // test case
-                else if(input == 5) {
-                    System.out.println("testing menu redirect");
-                    scanner.reset();
-                    staff();
                 }
                 // Return to main menu
                 else if(input == 0) {
@@ -393,6 +399,7 @@ public class Menu {
                 // Display all movie borrowed
                 else if (input == 4) {
                     scanner.nextLine();
+                    System.out.println("Borrowed DVDs:");
                     System.out.println(member.displayBorrowList());
                     System.out.print("Enter any key to return to menu...: ");
                     scanner.nextLine();
@@ -401,7 +408,7 @@ public class Menu {
                 else if (input == 5) {
                     scanner.nextLine();
 
-                    BestOfTen.display();
+                    TopTen.display();
                     System.out.print("Enter any key to return to menu...: ");
                     scanner.nextLine();
                     System.out.print(memberMenu);

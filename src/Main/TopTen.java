@@ -3,11 +3,9 @@ package Main;
 import Movie.MovieCollection;
 import Movie.MovieNode;
 
-import java.util.Arrays;
-
 // Display Top 10 Movie by Borrowed DVDs
-public class BestOfTen {
-    public BestOfTen() {};
+public class TopTen {
+    public TopTen() {};
     private static int[] getMaxAndMin(MovieNode[] arr) {
         int min = arr[0].getBorrowedNum();
         int max = arr[0].getBorrowedNum();
@@ -21,7 +19,7 @@ public class BestOfTen {
         }
         return new int[] {max, min};
     }
-    public static MovieNode[] sortArray(){
+    public static MovieNode[] countingSort(){
         MovieNode[] allMovieArray = MovieCollection.getInstance().getAllNode();
         int [] maxAndMin = getMaxAndMin(allMovieArray);
 
@@ -34,6 +32,7 @@ public class BestOfTen {
             count[movieNode.getBorrowedNum() - maxAndMin[1]]++;
         }
         for (int i = 1; i < count.length; i++) { count[i] += count[i - 1]; }
+
         for (int i = allMovieArray.length - 1; i >= 0; i--) {
             output[count[allMovieArray[i].getBorrowedNum() - maxAndMin[1]] - 1] = allMovieArray[i];
             count[allMovieArray[i].getBorrowedNum() - maxAndMin[1]]--;
@@ -49,11 +48,15 @@ public class BestOfTen {
     }
 
     public static void display() {
-        MovieNode[] allMovieArray = sortArray();
+        MovieNode[] allMovieArray = countingSort();
 
         StringBuilder all = new StringBuilder();
-        for (int i=0; i < allMovieArray.length; i++){
-            all.append(String.format("%02d",i + 1)).append(". ").append(allMovieArray[i].getMovie().getTitle()).append("\n");
+        for (int i=0; i < 10; i++){
+            if(allMovieArray[i] == null){
+                break;
+            }
+            all.append(String.format("%02d",i + 1)).append(". ")
+               .append(allMovieArray[i].getMovie().getTitle()).append("\n");
         }
         System.out.println(all);
     }

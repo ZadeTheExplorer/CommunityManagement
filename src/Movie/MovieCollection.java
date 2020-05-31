@@ -7,7 +7,7 @@ import javax.swing.*;
 public class MovieCollection {
     private static MovieCollection movieCollection;
     private static BinarySearchTree MovieBTS;
-    private MovieNode[] allNode = new MovieNode[50];
+    private final MovieNode[] allNode = new MovieNode[50];
 
     private MovieCollection() {}
 
@@ -23,7 +23,7 @@ public class MovieCollection {
 
     public void add(Movie movie) {
         MovieBTS.addNode(movie.getTitle(), movie);
-        System.out.println("Movie Added!");
+
     }
 
     public void remove(String movieTitle) {
@@ -36,11 +36,7 @@ public class MovieCollection {
     }
 
     public MovieNode search(String movieTitle) {
-        MovieNode movie = MovieBTS.search(movieTitle);
-        if (movie == null) {
-            System.out.println("Cannot found movie: " + movieTitle);
-        }
-        return movie;
+        return MovieBTS.search(movieTitle);
     }
 
     public void modifyBorrowedNum(String title, int amountOfDVDs) {
@@ -94,7 +90,7 @@ public class MovieCollection {
         //String [] AllMovieArr = MovieBTS.getAllNode();
         MovieNode[] AllMovieArr = getAllNode();
         for (int i=0; i < AllMovieArr.length; i++){
-                all.append(String.format("%02d",i + 1)).append(". ").append(AllMovieArr[i].getMovie().toString()).append("\n");
+            all.append(String.format("%02d",i + 1)).append(". ").append(AllMovieArr[i].getMovie().toString()).append("\n");
         }
         System.out.println(all);
     }

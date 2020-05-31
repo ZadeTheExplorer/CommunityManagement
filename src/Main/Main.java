@@ -10,7 +10,7 @@ import java.util.Arrays;
  * The type Main.
  */
 public class Main {
-
+    //TODO: COMMENT
     public static void main(String[] args){
         Movie movie1 = new Movie(
                 "Titanic",
@@ -42,7 +42,7 @@ public class Main {
                 Genres.THRILLER,
                 Classification.M,
                 "Mar 22, 2019 (Wide)",
-                10
+                4
         );
 
         MovieCollection movieCollection = MovieCollection.getInstance();
@@ -71,7 +71,7 @@ public class Main {
         Member member4 = new Member("Bill Gates", "1234", "0123789456", "America");
         Member member5 = new Member("Barack Obama", "1234", "0456712389", "America");
         Member member6 = new Member("Elon Musk", "1234", "0412356789", "America");
-        Member member7 = new Member("Sy Tri Ha", "1008", "0481112771", "Vietnam");
+        Member member7 = new Member("Sy Tri Ha", "1234", "0123456789", "Vietnam");
 
         MemberCollection memberCollection = MemberCollection.getInstance();
         memberCollection.addMember(member1);
@@ -82,17 +82,11 @@ public class Main {
         memberCollection.addMember(member6);
         memberCollection.addMember(member7);
         // Member 1 borrowed full slots
-        member1.borrowDVD("Movie 01");member1.borrowDVD("Movie 03");member1.borrowDVD("Movie 04");member1.borrowDVD("Movie 05");
-        member1.borrowDVD("Movie 02");member1.borrowDVD("Titanic");member1.borrowDVD("The Wizard of Oz");member1.borrowDVD("Movie 08");
-        member1.borrowDVD("Movie 09");member1.borrowDVD("Us");
+        member1.borrowDVD("Movie 01");member1.borrowDVD("Us");
 
         member2.borrowDVD("Movie 03");member2.borrowDVD("Us");member2.borrowDVD("Titanic");member2.borrowDVD("The Wizard of Oz");
         member3.borrowDVD("Movie 04");member3.borrowDVD("Us");
-        member4.borrowDVD("Movie 05");member4.borrowDVD("Movie 03");member4.borrowDVD("Movie 07");
-        member5.borrowDVD("Movie 06");member5.borrowDVD("Movie 07");member5.borrowDVD("Us");member5.borrowDVD("Titanic");
-        member6.borrowDVD("Movie 07");member6.borrowDVD("Movie 04");
-
-        memberCollection.searchMember("ewfewfew");
+        member7.borrowDVD("Us");
         Menu menu = new Menu(movieCollection);
         menu.main();
 
