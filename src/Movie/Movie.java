@@ -69,7 +69,7 @@ public class Movie {
 
     @Override
     public String toString() {
-        return title + '{' + '\n' +
+        return title + " {" + '\n' +
                 "      starring: " + starring + '\n' +
                 "      director: " + director + '\n' +
                 "      genre: " + genre + '\n' +

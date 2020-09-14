@@ -88,6 +88,7 @@ public class Member extends User{
                 string.append(movie.getTitle()).append("\n");
             }
         }
+        System.out.println("Borrowed List!");
         return string.toString();
     }
 }

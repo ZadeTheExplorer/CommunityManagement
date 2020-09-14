@@ -4,7 +4,10 @@ import Movie.*;
 import User.Member;
 import User.MemberCollection;
 
+import java.io.IOException;
 import java.util.Arrays;
+
+import static java.lang.Thread.sleep;
 
 /**
  * The type Main.
@@ -46,23 +49,7 @@ public class Main {
         );
 
         MovieCollection movieCollection = MovieCollection.getInstance();
-        movieCollection.add(movie1);
-        movieCollection.add(movie2);
-        movieCollection.add(movie3);
-        for (int i=0; i<10; i++){
-            String title = "Movie " + String.format("%02d", i+1);
-            Movie movie = new Movie(
-                    title,
-                    "Actor 1, Actress 2",
-                    "Director 1",
-                    "100 minutes",
-                    Genres.THRILLER,
-                    Classification.MA,
-                    "OLD",
-                    10
-            );
-            movieCollection.add(movie);
-        }
+
 
 
         Member member1 = new Member("Taylor Swift", "1234", "0123456789", "America");
@@ -74,19 +61,66 @@ public class Main {
         Member member7 = new Member("Sy Tri Ha", "1234", "0123456789", "Vietnam");
 
         MemberCollection memberCollection = MemberCollection.getInstance();
-        memberCollection.addMember(member1);
-        memberCollection.addMember(member2);
-        memberCollection.addMember(member3);
-        memberCollection.addMember(member4);
-        memberCollection.addMember(member5);
-        memberCollection.addMember(member6);
-        memberCollection.addMember(member7);
-        // Member 1 borrowed full slots
-        member1.borrowDVD("Movie 01");member1.borrowDVD("Us");
 
-        member2.borrowDVD("Movie 03");member2.borrowDVD("Us");member2.borrowDVD("Titanic");member2.borrowDVD("The Wizard of Oz");
-        member3.borrowDVD("Movie 04");member3.borrowDVD("Us");
-        member7.borrowDVD("Us");
+
+        char[] animationChars = new char[]{'|', '/', '-', '\\'};
+
+        for (int i = 0; i <= 100; i++) {
+            System.out.print("Initializing: " + i + "% " + animationChars[i % 4] + "\r");
+
+            try {
+                if (i == 1){
+                    System.out.println("Staffs are adding new movie to movie collection...");
+                    movieCollection.add(movie1);
+                    movieCollection.add(movie2);
+                    movieCollection.add(movie3);
+                    for (int j=0; j<10; j++){
+                        String title = "Movie " + String.format("%02d", j+1);
+                        Movie movie = new Movie(
+                                title,
+                                "Actor 1, Actress 2",
+                                "Director 1",
+                                "100 minutes",
+                                Genres.THRILLER,
+                                Classification.MA,
+                                "OLD",
+                                10
+                        );
+                        movieCollection.add(movie);
+                    }
+                    sleep(100);
+                    System.out.println("Adding new movie finished.");
+                }
+                if (i == 33) {
+                    System.out.println("Staffs are adding sample members to member collection...");
+                    memberCollection.addMember(member1);
+                    memberCollection.addMember(member2);
+                    memberCollection.addMember(member3);
+                    memberCollection.addMember(member4);
+                    memberCollection.addMember(member5);
+                    memberCollection.addMember(member6);
+                    memberCollection.addMember(member7);
+                    sleep(100);
+                    System.out.println("Sample member generated.");
+                }
+                if (i == 60) {
+                    System.out.println("Sample members are borrowing movie DVDs...");
+                    // Member 1 borrowed full slots
+                    member1.borrowDVD("Movie 01");member1.borrowDVD("Us");
+                    member2.borrowDVD("Movie 03");member2.borrowDVD("Us");member2.borrowDVD("Titanic");member2.borrowDVD("The Wizard of Oz");
+                    member3.borrowDVD("Movie 04");member3.borrowDVD("Us");
+                    member7.borrowDVD("Us");
+                    sleep(100);
+                    System.out.println("Sample Borrowing DVDs finished.");
+                }
+                sleep(100);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+
+        System.out.println("Initializing: Done!  - 100%");
+        System.out.println("Redirect user to main menu.");
         Menu menu = new Menu(movieCollection);
         menu.main();
 

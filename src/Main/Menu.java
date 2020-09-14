@@ -4,6 +4,7 @@ import Movie.*;
 import User.Member;
 import User.MemberCollection;
 
+import java.sql.SQLOutput;
 import java.util.Scanner;
 
 public class Menu {
@@ -183,18 +184,27 @@ public class Menu {
                     String username = scanner.nextLine();
                     System.out.print("Enter password: ");
                     String password = scanner.nextLine();
-
+                    boolean loginSuccess = true;
                     while(!checkLoginMember(username, password)) {
-                        System.out.println("Login false, please do it again!");
-
+                        System.out.println("Login false!");
+                        System.out.println("Please login again or enter 0 to username part and " +
+                                "then enter to return back to main menu");
                         System.out.print("Enter username: ");
                         username = scanner.nextLine();
+                        if (username.equals("0")){
+                            loginSuccess = false;
+                            break;
+                        }
                         System.out.print("Enter password: ");
                         password = scanner.nextLine();
                     }
-                    Member member = MemberCollection.getInstance().searchMember(username);
-                    System.out.println("Login successful!");
-                    member(member);
+                    if (loginSuccess) {
+                        Member member = MemberCollection.getInstance().searchMember(username);
+                        System.out.println("Login successful!\n\n");
+                        member(member);
+                    } else {
+                        main();
+                    }
                 }
                 else if(input == 0) {
                     scanner.close();
